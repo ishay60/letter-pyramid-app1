@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const LetterPyramid = () => {
+  const [inputString, setInputString] = useState("");
+  const [pyramid, setPyramid] = useState("");
+
+  const generatePyramid = () => {
+    let pyramid = "";
+
+    const length = inputString.length;
+
+    for (let i = 0; i < length; i++) {
+      // Add spaces before each line
+      for (let j = length - i; j > 0; j--) pyramid += " ";
+
+      // Add characters and special symbols
+      for (let j = 0; j <= i; j++) {
+        pyramid += inputString[j];
+      }
+
+      // Add characters in decreasing order
+      for (let j = i - 1; j >= 0; j--) {
+        pyramid += inputString[j];
+      }
+
+      pyramid += "\n";
+    }
+
+    setPyramid(pyramid);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        value={inputString}
+        onChange={(e) => setInputString(e.target.value)}
+      />
+      <button onClick={generatePyramid}>Generate Pyramid</button>
+      <pre>{pyramid}</pre>
     </div>
   );
-}
+};
+
+const App = () => {
+  return (
+    <div className="App">
+      <h1>Letter Pyramid Generator</h1>
+      <LetterPyramid />
+    </div>
+  );
+};
 
 export default App;
